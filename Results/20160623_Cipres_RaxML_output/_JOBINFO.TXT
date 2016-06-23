@@ -1,0 +1,14 @@
+Task\ label=20160623_KM_phylo_Raxml
+Task\ ID=936290
+Tool=RAXMLHPC2BB
+created\ on=2016-06-23 08:20:48.0
+JobHandle=NGBW-JOB-RAXMLHPC2BB-4E8371C6FE2D45A6944717A8533735A2
+resource=comet
+User\ ID=68268
+User\ Name=anbe642
+email=adnguyen@uvm.edu
+
+Output=(raxml_outputfiles,RAXML_*,UNKNOWN,UNKNOWN,UNKNOWN),(all_outputfiles,*,UNKNOWN,UNKNOWN,UNKNOWN)
+ChargeFactor=1.000000
+cores=48
+JOBID=3170523
