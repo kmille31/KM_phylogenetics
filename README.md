@@ -7,5 +7,5 @@
 # Repo layout
 
 1. **Data/**: Snp  matrix and newick file (NJ)   
-2. **Results/**: PDF of pcoa decomposition of branch lengths of NJ tree   
+2. **Results/**: PDF of pcoa decomposition of branch lengths of NJ tree; also dataset (csv) of eigenvectors   
 3. **Scripts/**: Rmarkdown script for getting results.   
