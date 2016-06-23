@@ -1,0 +1,16 @@
+{
+    "contents" : "---\ntitle: \"PCOA phylogeny\"\nauthor: \"Antdrew D. Nguyen\"\ndate: \"2016-June-23\"\noutput: pdf_document\n---\n```{r libraries}\nlibrary(ape)\nlibrary(geiger)\nlibrary(ade4)\nlibrary(adephylo)\n```\n\n```{r tree manipulations}\n\n#read in NJ tree\nKMtree<-read.tree(\"../Data/20160623_Katie_NJ_tree_N6_3SNP_ANBE_mod.nwk\")\n\nplot(KMtree)\n#excluding\n#ABP3,BRP7,BEAR4,CGYM12\nlength(KMtree$tip.label)\nKMtree2<-drop.tip(KMtree,c(\"ABP3\",\"BRP7\",\"BEAR4\",\"CGYM12\"))\nlength(KMtree2$tip.label)\n#looks like only 1 tip dropped out\n#ifelse(KMtree$tip.label==\"ABP3\",1,0)\n\n\n# getting a distance matrix from branch lengths\nbl<-cophenetic(KMtree2)\n\n# pcoa of distance matrix\nKMpcoa<-pcoa(bl)\n\n\n#exploring the pcoa's\nknitr::kable(KMpcoa$values[1:10,])\n\n#plotting the first and second axis\nplot(KMpcoa$vectors[,1],KMpcoa$vectors[,2])\ntext(KMpcoa$vectors[,1],KMpcoa$vectors[,2],labels=KMtree2$tip.label)\n\n#the eigenvectors\n#KMpcoa$vectors[,1:10]\n#write.csv(KMpcoa$vectors[,1:10],\"20160623_KM_eigenvectors.csv\")\n\n\n#code for merging eigenvectors into dataset\n#setting as dataframe\npcoa.dat<-as.data.frame(KMpcoa$vectors[,1:10])\n\n##This is important, setting a new column with the names of tip labels\npcoa.dat$colony_id_name<-KMtree2$tip.label\n\nknitr::kable(head(pcoa.dat[1:4,]))\n#merging dataset with ant_dat_clim\n\n#Final.dat1<-inner_join(originaldata,pcoa.dat,by=\"colony_id_name\")\n\n```\n\n\n```{r sessioninfo}\nsessionInfo()\n```\n\n",
+    "created" : 1466697355935.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3978621241",
+    "id" : "3D8402CC",
+    "lastKnownWriteTime" : 1466697375,
+    "path" : "~/zScience/Side_projects/KM_phylogenetics/Script/20160623_KM_tree_manipulations.Rmd",
+    "project_path" : "20160623_KM_tree_manipulations.Rmd",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}

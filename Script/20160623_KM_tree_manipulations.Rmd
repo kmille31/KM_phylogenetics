@@ -14,7 +14,7 @@ library(adephylo)
 ```{r tree manipulations}
 
 #read in NJ tree
-KMtree<-read.tree("20160623_Katie_NJ_tree_N6_3SNP_ANBE_mod.nwk")
+KMtree<-read.tree("../Data/20160623_Katie_NJ_tree_N6_3SNP_ANBE_mod.nwk")
 
 plot(KMtree)
 #excluding
