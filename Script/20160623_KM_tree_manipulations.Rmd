@@ -11,7 +11,8 @@ library(ade4)
 library(adephylo)
 ```
 
-```{r tree manipulations}
+#NJ tree
+```{r NJ tree manipulations}
 
 #read in NJ tree
 KMtree<-read.tree("../Data/20160623_Katie_NJ_tree_N6_3SNP_ANBE_mod.nwk")
@@ -59,6 +60,26 @@ knitr::kable(head(pcoa.dat[1:4,]))
 
 ```
 
+#raxml tree
+```{r raxml tree manips}
+tree2<-read.tree("../Results/20160623_Cipres_RaxML_output/20160623_BL_tree_parsed.newick")
+
+plot(tree2)
+KMtree3<-drop.tip(tree2,c("ABP3","BRP7","BEAR4","CGYM12"))
+#length(tree2$tip.label)
+#length(KMtree3$tip.label)
+
+
+# getting a distance matrix from branch lengths
+bl2<-cophenetic(KMtree3)
+
+# pcoa of distance matrix
+KMpcoa2<-pcoa(bl2)
+biplot(KMpcoa2)
+
+#plot(KMpcoa$vector[,1],KMpcoa2$vector[,1])
+#text(KMpcoa$vector[,1],KMpcoa2$vector[,1],labels=KMtree3$tip.label)
+```
 
 ```{r sessioninfo}
 sessionInfo()
