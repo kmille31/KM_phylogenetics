@@ -19,6 +19,7 @@ CN<-read.csv("../Data/Latitude_CN-data_cleaned-up-8-19-16.csv")
 P<-read.csv("../Data/Latitude_P-data_cleaned-up-8-19-16.csv")
 
 combined<-left_join(CN,P,by=c("Site","Name","rep"))
+write.csv(combined,"../Data/20160823_combined_dataset_CN_P.csv")
 ```
 
 
