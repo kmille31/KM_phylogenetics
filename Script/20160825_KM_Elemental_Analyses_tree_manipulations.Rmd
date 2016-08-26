@@ -30,13 +30,31 @@ P<-read.csv("../Data/Latitude_P-data_cleaned-up-8-19-16.csv")
 
 combined<-left_join(CN,P,by=c("Site","Name","rep"))
 write.csv(combined,"../Data/20160823_combined_dataset_CN_P.csv")
+head(combined)
 
 #Get Climate Data
-BioClim<-getData('worldclim',var="bio",res=10)
+BioClim<-getData('worldclim',var="bio",res=2.5)
 names(BioClim)
 
 #Ploting first bioclim dimension (MAT) to check download worked.
 plot(BioClim,1,col=colorRampPalette(c("blue","purple","red"))(255))
+
+# Extract climate variable (MAT) for site lon/lat from bioclim data
+#Note that Bioclim data have MAT multiplied by 10 for ease of analysis
+BioClim_All<- extract(BioClim, combined[,c("Lon","Lat")])
+
+
+dbio <- cbind(combined, BioClim_All)
+head(dbio)
+tail(dbio)
+
+#Combining Common Garden data (CN and P)
+CG_CN<-read.csv("../Data/20160826_CommonGarden_CN.csv")
+CG_P<-read.csv("../Data/20160826_CommonGarden_Phos.csv")
+
+CG_Combined<-left_join(CG_CN,CG_P,by=c("Site","ColonyID","rep","TimePoint","SampleID","Colony"))
+write.csv(CG_Combined,"../Data/20160826_CG_combined_CN_P.csv")
+head(CG_Combined)
 
 
 
