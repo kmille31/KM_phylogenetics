@@ -57,9 +57,7 @@ write.csv(CG_Combined,"../Data/20160826_CG_combined_CN_P.csv")
 head(CG_Combined)
 
 
-
 ```
-
 
 
 #NJ tree
@@ -101,9 +99,10 @@ text(KMpcoa$vectors[,1],KMpcoa$vectors[,2],labels=KMtree2$tip.label)
 #setting as dataframe
 pcoa.dat<-as.data.frame(KMpcoa$vectors[,1:10])
 
-##This is important, setting a new column with the names of tip labels
-pcoa.dat$colonyID2<-KMtree2$tip.label
+##This is important: creating a new column with the colony names (the tip labels in my tree).
+pcoa.dat$Name<-KMtree2$tip.label
 
+#
 knitr::kable(head(pcoa.dat[1:4,]))
 #merging dataset with ant_dat_clim
 
@@ -132,7 +131,7 @@ biplot(KMpcoa2)
 #text(KMpcoa$vector[,1],KMpcoa2$vector[,1],labels=KMtree3$tip.label)
 ```
 
-```{r Merging Datasets}
+```{r Merging Datasets, eval=FALSE}
 #Reading in original dataset (C, N, P averages)
 Full_data <-read.csv("../Data/TOTAL_FINAL_DATA_SET_KMBE_v2_07-22-2016.csv")
 #Manually renaming colony IDs to match IDs in original dataset
@@ -148,42 +147,38 @@ dim(Final.dat1)
 
 ```
 
-```{r, include=False}
+```{r, eval=False}
 #stats
-library(MuMIn)
+#library(MuMIn)
 #checking correlation in climate variables
-clim.pca<-princomp(scale(Final.dat1[,8:11]))
-summary(clim.pca)
-clim.pca$loadings[,1:3]
-Final.dat1<-cbind(Final.dat1,clim.pca$scores[,1:3])
+#clim.pca<-princomp(scale(Final.dat1[,8:11]))
+#summary(clim.pca)
+#clim.pca$loadings[,1:3]
+#Final.dat1<-cbind(Final.dat1,clim.pca$scores[,1:3])
 
 
 #construct full model
 #c.mod<-lm(C.percent.colony~MAT+DRT+APS+MAP+CN.colony.mass+Axis.1+Axis.2+Axis.3+Axis.4+Axis.5+MAT*Axis.1+MAT*Axis.2+MAT*Axis.3+MAT*Axis.4+MAT*Axis.5+DRT*Axis.1+DRT*Axis.2+DRT*Axis.3+DRT*Axis.4+DRT*Axis.5+APS*Axis.1+APS*Axis.2+APS*Axis.3+APS*Axis.4+APS*Axis.5+MAP*Axis.1+MAP*Axis.2+MAP*Axis.3+MAP*Axis.4+MAP*Axis.5+CN.colony.mass*Axis.1+CN.colony.mass*Axis.2+CN.colony.mass*Axis.3+CN.colony.mass*Axis.4+CN.colony.mass*Axis.5, data=na.omit(Final.dat1))
 #c.mod<-lm(C.percent.colony~MAT+DRT+APS+MAP+CN.colony.mass+Axis.1+Axis.2+Axis.3+Axis.1*DRT+Axis.1*APS+Axis.2*DRT+Axis.2*APS+Axis.3*DRT+Axis.3*APS, data=na.omit(Final.dat1))
-ef<-lm(C.percent.colony~Axis.1+Axis.2+Axis.3+Axis.4+Axis.5,data=Final.dat1);summary(ef)
+#ef<-lm(C.percent.colony~Axis.1+Axis.2+Axis.3+Axis.4+Axis.5,data=Final.dat1);summary(ef)
 
 
-c.mod<-lm(C.percent.colony~Comp.1*Axis.2+Comp.2*Axis.2+Comp.3*Axis.2+CN.colony.mass,data=Final.dat1)
+#c.mod<-lm(C.percent.colony~Comp.1*Axis.2+Comp.2*Axis.2+Comp.3*Axis.2+CN.colony.mass,data=Final.dat1)
 
-summary(c.mod)
+#summary(c.mod)
 
 # model selection: use dredge function from MuMIn package to grab AIC rankings of subset models
-new<-na.omit(Final.dat1)
-c.mod2<-lm(C.percent.colony~Comp.1*Axis.2+Comp.2*Axis.2+Comp.3*Axis.2+CN.colony.mass,data=new)
-sum.mod<-dredge(c.mod2);sum.mod
-plot(sum.mod)
+#new<-na.omit(Final.dat1)
+#c.mod2<-lm(C.percent.colony~Comp.1*Axis.2+Comp.2*Axis.2+Comp.3*Axis.2+CN.colony.mass,data=new)
+#sum.mod<-dredge(c.mod2);sum.mod
+#plot(sum.mod)
 
 
 #model selection with MASS package
-library(MASS)
-summary(stepAIC(c.mod,direction="both"))
+#library(MASS)
+#summary(stepAIC(c.mod,direction="both"))
 
 
 ```
 
-
-```{r sessioninfo}
-sessionInfo()
-```
 
